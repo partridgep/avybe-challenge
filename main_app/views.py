@@ -6,12 +6,16 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # VIEWS
 
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    user = request.user
+    return render(request, 'home.html', {
+        'user': user
+        })
 
 def signup(request):
     error_message = ''
@@ -35,3 +39,19 @@ def signup(request):
     form = SignUpForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+# Class-based views
+
+class AddNickname(LoginRequiredMixin, CreateView):
+    model = Profile
+    fields = ['nickname'] 
+
+    def form_valid(self, form):
+        # Assign the logged in user (self.request.user)
+        form.instance.user = self.request.user  
+        # Let the CreateView do its job as usual
+        return super().form_valid(form)
+
+class EditNickname(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ['nickname'] 
