@@ -11,6 +11,8 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('account/signup', views.signup, name='signup'),
-    path('user/<int:pk>/add_nickname/', views.AddNickname.as_view(), name='add_nickname'),
-    path('user/<int:pk>/edit_nickname/', views.EditNickname.as_view(), name='edit_nickname'),
+    path('add_nickname/', views.AddNickname.as_view(), name='add_nickname'),
+    path('profile/<int:pk>/edit_nickname/', views.EditNickname.as_view(), name='edit_nickname'),
+    path('user/<int:user_id>/add_picture/', views.add_picture, name='add_picture'),
+    path('user/<int:user_id>/change_picture/', views.change_picture, name='change_picture'),
 ]

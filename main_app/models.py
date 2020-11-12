@@ -16,7 +16,7 @@ class Profile(models.Model):
 
 class Picture(models.Model):
     url = models.CharField(max_length=200)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

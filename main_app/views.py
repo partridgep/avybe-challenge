@@ -7,6 +7,11 @@ from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+import uuid
+import boto3
+
+S3_BASE_URL = "https://pp-avybe.s3.amazonaws.com/"
+BUCKET = "pp-avybe"
 
 # VIEWS
 
@@ -39,6 +44,49 @@ def signup(request):
     form = SignUpForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+@login_required
+def add_picture(request, user_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{key}"
+            photo = Picture(url=url, user_id=user_id)
+            photo.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('home')
+
+@login_required
+def change_picture(request, user_id):
+    user = request.user
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{key}"
+            # first we'll want to delete the old picture
+            old_photo = user.picture
+            old_photo.delete()
+            # now we replace it with the new one
+            photo = Picture(url=url, user_id=user_id)
+            photo.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('home')
 
 # Class-based views
 
