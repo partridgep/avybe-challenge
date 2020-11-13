@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if object %}
-    <h1>Edit your Nickname</span></h1>
-    {% else %}
-    <h1>Add Nickname</h1>
-    {% endif %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table  }}
-        </table>
-        <input type="submit" value="Submit" class="btn">
-    </form>
+    <div class='user-form flex-ctr'>
+        {% if object %}
+        <h1>Edit your Nickname</span></h1>
+        {% else %}
+        <h1>Add Nickname</h1>
+        {% endif %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table  }}
+            </table>
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form>
+    </div>
 {% endblock %}

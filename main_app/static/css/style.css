@@ -1,0 +1,76 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+main {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: centers;
+}
+
+.flex-ctr, .flex-start {
+    display: flex;
+    align-items: center;
+}
+
+.flex-ctr {
+    justify-content: center;
+}
+
+.flex-start {
+    justify-content: flex-start;
+}
+
+.welcome-page {
+    flex-direction: column;
+    width: 100vw;
+    min-height: 100vh;
+  }
+
+.user-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+  }
+
+.title-part h1 {
+    font-size: 50px;
+    color: rgb(122, 50, 255);
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+}
+
+.login-selector {
+    text-align: center;
+}
+
+.form {
+    width: 65vw;
+    margin: 0 auto;
+  }
+
+.btn {
+    margin-top: 20px;
+}
+
+.user-info {
+    background: linear-gradient(rgb(199, 200, 243), rgb(130, 117, 207));
+    border-radius: 10px;
+    padding: 50px;
+}
+
+.user-picture {
+    height: 300px;
+    margin: 30px;
+    border-radius: 30px;
+}
+
+.user-nickname .btn {
+    margin: 0;
+}
