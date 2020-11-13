@@ -23,13 +23,14 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'm+#4y*@=fx@6azs&!v%_$!v3c$3k($b1!*(#87i&mvhct)y-4$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# SWITCH THIS WHEN RUNNING IN DEV MODE
+# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'main_app',
     'crispy_forms',
@@ -122,3 +123,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGOUT_REDIRECT_URL = '/'
+
+''' COMMENT OUT IF OPENING IN DEV MODE
+'''
+import django_heroku
+django_heroku.settings(locals())
